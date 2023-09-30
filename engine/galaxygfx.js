@@ -15,8 +15,13 @@ class galaxygfx {
         this.clear();
     }
 
-    drawspr = function(spr, x, y) {
+    drawspr = function(spr, x, y, rot) {
+        this.ctx.save();
+        if(rot!=0) {
+            this.ctx.rotate(rot*Math.PI/180);
+        }
         this.ctx.drawImage(spr.img, x, y, spr.width, spr.height)
+        this.ctx.restore();
     }
 
     clear = function() {

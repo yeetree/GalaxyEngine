@@ -54,6 +54,6 @@ class entity {
     }
 
     draw = function(gfx) {
-        gfx.drawspr(this.sprite, this.x, this.y);
+        gfx.drawspr(this.sprite, this.x, this.y, this.rot);
     }
 }
