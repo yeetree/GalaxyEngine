@@ -6,6 +6,8 @@ async function load() {
     ent.rot = 0;
     let cont = new container();
     cont.addChild(ent)
+    cont.rot = 0;
+    cont.x = 50
     game.scene.addChild(cont);
     game.draw();
 }
