@@ -17,7 +17,7 @@ class galaxy {
     //Loops through objects and draws them
     draw = function() {
         this.gfx.clear();
-        this.scene.draw(this.gfx, 0, 0, 0);
+        this.scene.draw(this.gfx);
     }
 }
 
@@ -32,8 +32,10 @@ class container {
     //Layer
     layer = 0;
 
+    //Matrix (calculated on draw)
     _mat = Mat(0, 0, 1, 0);
 
+    //Updates matrix based off of position and rotation
     _upMat = function() {
         this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
     }
@@ -47,19 +49,21 @@ class container {
     }
 
     //Draw
-    draw = function(gfx, rot, x, y) {
-        //Loop through all children
+    draw = function(gfx) {
+
+        //Updates matrixes and pushes context position and applies matrix
         this._upMat();
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
+
+        //Loop through children
         for(let i=0; i<this.objects.length; i++) {
             let ent = this.objects[i]
-            //Call draw function from child and offset rotation, x, and y, by current x and y.
-            //Basically, the x and y from the input of the function offsets the container, and then we
-            //offset the children by the container's x and y.
-            //Allows for endless inheritance and offsets
-            ent.draw(gfx, 0, 0, 0);
+            //Call draw function of entity
+            ent.draw(gfx);
         }
+
+        //pops context position
         gfx.ctx.restore();
     }
 }
@@ -75,8 +79,10 @@ class entity {
     //Layer
     layer = 0;
 
+    //Matrix (calculated on draw)
     _mat = Mat(0, 0, 1, 0);
 
+    //Updates matrix based off of position and rotation
     _upMat = function() {
         this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
     }
@@ -87,12 +93,15 @@ class entity {
     }
 
     //Draw function
-    draw = function(gfx, rot, x, y) {
+    draw = function(gfx) {
+        //Calculates matrix
         this._upMat();
+        //Pushes context position and applies matrix
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
-        //Draws the sprite at this entities position offsetted by the input position and rotation
+        //Draws the sprite
         gfx.drawspr(this.sprite, 0, 0, 0);
+        //Pops context position
         gfx.ctx.restore();
     }
 }
