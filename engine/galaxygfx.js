@@ -15,13 +15,12 @@ class galaxygfx {
         this.clear();
     }
 
+    //Draws sprite. (spr - sprite object, x - x position on screen to render, y - y position on screen to render
+    //rot - rotation to render the sprite
     drawspr = function(spr, x, y, rot) {
-        this.ctx.save();
-        if(rot!=0) {
-            this.ctx.rotate(rot*Math.PI/180);
-        }
+        //Save current 2d context transform
+        //Draw the image at the x and y, and reset 2d context transform
         this.ctx.drawImage(spr.img, x, y, spr.width, spr.height)
-        this.ctx.restore();
     }
 
     clear = function() {
@@ -34,13 +33,17 @@ class galaxygfx {
 
 //Sprite class
 class sprite {
-    //loads an image
+    //Image
     img = null;
     width = 0;
     height = 0;
+    //Loads image
     load = async function(src) {
+        //New image object
         this.img = new Image();
+        //Sets source to src
         this.img.src = src
+        //Waits for image to load
         await new Promise((resolve, reject) => {
             setTimeout(() => {
               resolve("timeout");
@@ -49,6 +52,7 @@ class sprite {
                 resolve();
             }
         });
+        //Sets the width to the image
         this.img.onload = null;
         this.width = this.img.width;
         this.height = this.img.height;
