@@ -10,6 +10,7 @@ class galaxygfx {
         this.canvas.width = w;
         this.canvas.height = h;
         this.canvas.setAttribute("id", "renderer");
+        this.canvas.setAttribute("tabindex", "1");
         document.body.appendChild(this.canvas)
         this.ctx = this.canvas.getContext("2d");
         this.clear();

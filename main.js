@@ -19,11 +19,20 @@ async function load() {
     loop();
 }
 
-let tick = 0;
 async function loop() {
     game.draw();
-    cont.rot = game.input.mousex
-    ent.rot = game.input.mousey
+    if(game.input.getKey("KeyW")) {
+        cont.rot += 5
+    }
+    if(game.input.getKey("KeyS")) {
+        cont.rot -= 5
+    }
+    if(game.input.getKeyDown("KeyA")) {
+        ent.rot += 5
+    }
+    if(game.input.getKeyDown("KeyD")) {
+        ent.rot -= 5
+    }
     await sleep(1);
     loop();
 }
