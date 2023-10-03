@@ -8,7 +8,7 @@ async function load() {
     await ent2.sprite.load("./sample.png")
     ent.rot = 0;
     ent.x = 20
-    ent2.rot = 180;
+    ent2.rot = 90;
     ent2.x = -20
     ent2.layer = 2
     cont.addChild(ent)
@@ -22,9 +22,9 @@ async function load() {
 let tick = 0;
 async function loop() {
     game.draw();
-    cont.rot += 0.01
-    ent.rot += 0.1
-    await sleep(20);
+    cont.rot = game.input.mousex
+    ent.rot = game.input.mousey
+    await sleep(1);
     loop();
 }
 

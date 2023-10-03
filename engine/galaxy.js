@@ -2,8 +2,9 @@
 
 //Engine Class
 class galaxy {
-    //Reference to galaxygfx
+    //Reference to galaxygfx and galaxyinpit
     gfx = null;
+    input = null;
 
     //Current scene (container)
     scene = null;
@@ -11,6 +12,7 @@ class galaxy {
     //Init
     constructor(w, h) {
         this.gfx = new galaxygfx(w, h)
+        this.input = new galaxyinput(this.gfx)
         this.scene = new container();
     }
 
@@ -107,12 +109,14 @@ class entity {
 }
 
 const Mat = (x, y, scale = 1, rotate = 0) => {
+    rotate = (rotate * Math.PI) / 180.0;
     const xAx = Math.cos(rotate) * scale;
     const xAy = Math.sin(rotate) * scale;
     return [xAx, xAy, -xAy, xAx, x, y];
 };
 
 const setMat = (mat, x, y, scale = 1, rotate = 0)  => {
+    rotate = (rotate * Math.PI) / 180.0;
     const xAx = Math.cos(rotate) * scale;
     const xAy = Math.sin(rotate) * scale;
     mat[0] = xAx;
