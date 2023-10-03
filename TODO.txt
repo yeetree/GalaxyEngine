@@ -1,6 +1,6 @@
-( ) Audio support
+(X) Audio support
 ( ) Animations
-( ) Graphics primitives (draw canvas on canvas?)
+(X) Graphics primitives (draw canvas on canvas?)
 ( ) Tilesheets + Tilesets
 ( ) Spritesheets
-( ) Make more like a game engine (structure + level loading + asset streaming)
+(X) Make more like a game engine (structure + level loading + asset streaming)

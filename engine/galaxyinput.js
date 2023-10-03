@@ -1,7 +1,7 @@
 //Galaxy Input Class
 class galaxyinput {
-    gfx = null;
-    canvas = null;
+    _gfx = null;
+    _canvas = null;
 
     mousex = 0;
     mousey = 0;
@@ -10,15 +10,15 @@ class galaxyinput {
     _uncheckedkeys = [];
     
     constructor(gfx) {
-        this.gfx = gfx
-        this.canvas = gfx.canvas
-        this.canvas.addEventListener("mousemove", this._upMPos.bind(this))
-        this.canvas.addEventListener("keydown", this._upKDwn.bind(this))
-        this.canvas.addEventListener("keyup", this._upKUp.bind(this))
+        this._gfx = gfx
+        this._canvas = gfx.canvas
+        this._canvas.addEventListener("mousemove", this._upMPos.bind(this))
+        this._canvas.addEventListener("keydown", this._upKDwn.bind(this))
+        this._canvas.addEventListener("keyup", this._upKUp.bind(this))
     }
 
     _upMPos = function(event) {
-        var rect = this.canvas.getBoundingClientRect();
+        var rect = this._canvas.getBoundingClientRect();
         this.mousex = event.clientX - rect.left;
         this.mousey = event.clientY - rect.top;
     }
@@ -37,10 +37,6 @@ class galaxyinput {
             this._keysdown.splice(idx, 1);
             this._uncheckedkeys.splice(uidx, 1);
         }
-    }
-
-    getMousePos = function() {
-        return { x: this.mousex, y: this.mousey }
     }
 
     getKeyDown = function(key) {
