@@ -53,7 +53,6 @@ class galaxy {
             if (this._frameCount === this._eachNthFrame) {
                 this._frameCount = 0;
                 this._update();
-                this._draw();
             }
             this._frameCount++;
             requestAnimationFrame(this._loop.bind(this));
