@@ -34,29 +34,15 @@ class galaxy {
             this.scene._start();
             this.alreadystarted = true;
         }
-        requestAnimationFrame(this._loop.bind(this));
+        this._loop();
     }
 
-    _update = function() {
+    _loop = async function() {
         this.scene._update();
-        this._draw();
-    }
-
-    //Loops through objects and draws them
-    _draw = function() {
         this.gfx.clear();
         this.scene._draw(this.gfx);
-    }
-
-    _loop = function() {
-        if(this.running) {
-            if (this._frameCount === this._eachNthFrame) {
-                this._frameCount = 0;
-                this._update();
-            }
-            this._frameCount++;
-            requestAnimationFrame(this._loop.bind(this));
-        }
+        await sleep(16);
+        this._loop();
     }
 }
 
@@ -74,11 +60,6 @@ class container {
     //Matrix (calculated on draw)
     _mat = Mat(0, 0, 1, 0);
 
-    //Updates matrix based off of position and rotation
-    _upMat = function() {
-        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
-    }
-
     //Add a child to the container
     addChild = function(child) {
         //Add reference to array
@@ -91,15 +72,13 @@ class container {
     _draw = function(gfx) {
 
         //Updates matrixes and pushes context position and applies matrix
-        this._upMat();
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
 
         //Loop through children
         for(let i=0; i<this.objects.length; i++) {
-            let ent = this.objects[i]
             //Call draw function of entity
-            ent._draw(gfx);
+            this.objects[i]._draw(gfx);
         }
 
         //pops context position
@@ -109,11 +88,11 @@ class container {
     //Update
     _update = function() {
         this.update();
+        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
         //Loop through children
         for(let i=0; i<this.objects.length; i++) {
-            let ent = this.objects[i]
             //Call update function of entity
-            ent._update();
+            this.objects[i]._update();
         }
     }
 
@@ -122,9 +101,8 @@ class container {
         this.start();
         //Loop through children
         for(let i=0; i<this.objects.length; i++) {
-            let ent = this.objects[i]
             //Call start function of entity
-            ent._start();
+            this.objects[i]._start();
         }
     }
     
@@ -148,11 +126,6 @@ class entity {
     //Matrix (calculated on draw)
     _mat = Mat(0, 0, 1, 0);
 
-    //Updates matrix based off of position and rotation
-    _upMat = function() {
-        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
-    }
-
     //Create new sprite on creation (don't worry about this)
     constructor() {
         this.sprite = new sprite();
@@ -161,7 +134,6 @@ class entity {
     //Draw function
     _draw = function(gfx) {
         //Calculates matrix
-        this._upMat();
         //Pushes context position and applies matrix
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
@@ -173,6 +145,7 @@ class entity {
 
     _update = function() {
         this.update();
+        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
     }
 
     _start = function() {
