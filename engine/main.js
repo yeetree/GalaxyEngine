@@ -54,6 +54,7 @@ class container {
     x = 0;
     y = 0;
     rot = 0;
+    
     //Layer
     layer = 0;
 
@@ -66,6 +67,14 @@ class container {
         this.objects.push(child);
         //Sort by layer
         this.objects = this.objects.sort((a, b) => { if (a.layer > b.layer) { return 1 } return -1})
+    }
+
+    //Remove child from container
+    removeChild = function(child) {
+        //Remove Child
+        this.objects = this.objects.filter((c) => { return c != child})
+        //Sort by layer
+        //this.objects = this.objects.sort((a, b) => { if (a.layer > b.layer) { return 1 } return -1})
     }
 
     //Draw
