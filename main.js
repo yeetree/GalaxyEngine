@@ -26,16 +26,8 @@ async function load() {
 
     game.scene.addChild(ent);
 
-    //loop();
     game.start();
 }
 
-async function loop() {
-    ent._update();
-    game.gfx.clear();
-    ent._draw(game.gfx);
-    await sleep(10);
-    loop();
-}
 
 load();
