@@ -136,7 +136,7 @@ class entity {
         //Calculates matrix
         //Pushes context position and applies matrix
         gfx.ctx.save();
-        gfx.ctx.transform(...this._mat)
+        gfx.ctx.transform(...this._mat);
         //Draws the sprite
         gfx.drawspr(this.sprite, 0, 0, 0);
         //Pops context position

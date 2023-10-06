@@ -11,7 +11,7 @@ class galaxygfx {
         this.canvas.height = h;
         this.canvas.setAttribute("id", "renderer");
         this.canvas.setAttribute("tabindex", "1");
-        this.canvas.setAttribute("style", "outline:none");
+        this.canvas.setAttribute("style", "outline:none; background: black;");
         document.body.appendChild(this.canvas)
         this.ctx = this.canvas.getContext("2d");
         this.clear();
@@ -33,9 +33,7 @@ class galaxygfx {
 
     clear = function() {
         //fills screen with black
-        this.ctx.rect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillStyle = "black";
-        this.ctx.fill();
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 }
 
