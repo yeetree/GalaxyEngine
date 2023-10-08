@@ -4,7 +4,7 @@ class galaxygfx {
     canvas = null;
     ctx = null;
 
-    constructor(w, h) {
+    constructor(w, h, id) {
         //Creates renderer and gets 2d context
         this.canvas = document.createElement("canvas");
         this.canvas.width = w;
@@ -12,7 +12,7 @@ class galaxygfx {
         this.canvas.setAttribute("id", "renderer");
         this.canvas.setAttribute("tabindex", "1");
         this.canvas.setAttribute("style", "outline:none; background: black;");
-        document.body.appendChild(this.canvas)
+        document.getElementById(id).appendChild(this.canvas)
         this.ctx = this.canvas.getContext("2d");
         this.clear();
     }

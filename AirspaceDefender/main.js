@@ -1,5 +1,5 @@
 //Create galaxy instance
-let game = new galaxy(800, 600);
+let game = new galaxy(800, 600, "game");
 
 //Create entities
 let bg = new entity();
@@ -84,7 +84,7 @@ pivot.update = function() {
 
         if(game.input.getKeyDown("Space")) {
             if(!rocketfly) {
-                rocketspr.y = -50;
+                rocketspr.pos.y = -50;
                 rocket.rot = pivot.rot;
                 rocketfly = true;
             }
@@ -107,14 +107,14 @@ pivot.update = function() {
 rocket.update = function() {
     if(up) {
         if(rocketfly) {
-            rocketspr.y-=20
-            if(rocketspr.y < -600) {
+            rocketspr.pos.y-=20
+            if(rocketspr.pos.y < -600) {
                 rocketfly = false;
-                rocketspr.y = -50;
+                rocketspr.pos.y = -50;
                 pts-=20;
             }
         } else {
-            rocketspr.y = -50;
+            rocketspr.pos.y = -50;
             rocket.rot = pivot.rot;
         }
     }
@@ -134,14 +134,14 @@ async function load() {
     await ex3.load("./assets/ex3.png");
 
     rocket.addChild(rocketspr);
-    rocket.x = 400;
-    rocket.y = 510;
-    rocketspr.x = -25;
-    rocketspr.y = -50;
+    rocket.pos.x = 400;
+    rocket.pos.y = 510;
+    rocketspr.pos.x = -25;
+    rocketspr.pos.y = -50;
     rocket.layer = 1;
 
-    cannon.x = -25;
-    cannon.y = -110;
+    cannon.pos.x = -25;
+    cannon.pos.y = -110;
 
     base.layer = 2;
     cannon.layer = 1;
@@ -149,52 +149,52 @@ async function load() {
     pivot.addChild(cannon);
     pivot.layer = 1
 
-    pivot.x = 100;
-    pivot.y = 20;
+    pivot.pos.x = 100;
+    pivot.pos.y = 20;
 
     shooter.addChild(pivot);
     shooter.addChild(base)
     shooter.layer = 2;
 
-    shooter.x = 300;
-    shooter.y = 500;
+    shooter.pos.x = 300;
+    shooter.pos.y = 500;
 
     score.txt = "SCORE: 0"
     score.font = "20px arial"
     score.layer = 10;
-    score.y = 20;
+    score.pos.y = 20;
 
     asdt.txt = "Airspace Defense"
     asdt.font = "50px arial"
     asdt.layer = 10;
-    asdt.y = 285;
-    asdt.x = 10;
+    asdt.pos.y = 285;
+    asdt.pos.x = 10;
 
     tittxt.txt = "Press Space to Start"
     tittxt.font = "30px arial"
     tittxt.layer = 10;
-    tittxt.y = 320;
-    tittxt.x = 10;
+    tittxt.pos.y = 320;
+    tittxt.pos.x = 10;
 
     ctxt.txt = "Press space to shoot, use left and right arrows to aim."
     ctxt.font = "20px arial"
     ctxt.layer = 10;
-    ctxt.y = 300;
-    ctxt.x = 170;
+    ctxt.pos.y = 300;
+    ctxt.pos.x = 170;
 
-    getxt.txt = "Made with Galaxy Engine 0.2 Beta 2"
+    getxt.txt = "Made with Galaxy Engine 0.2 Beta 3"
     getxt.font = "20px arial"
     getxt.color = "black"
     getxt.layer = 10;
-    getxt.y = 597;
-    getxt.x = 2;
+    getxt.pos.y = 597;
+    getxt.pos.x = 2;
 
     ultxt.txt = "Game Over"
     ultxt.font = "50px arial"
     ultxt.color = "red"
     ultxt.layer = 10;
-    ultxt.y = 270;
-    ultxt.x = 275;
+    ultxt.pos.y = 270;
+    ultxt.pos.x = 275;
 
     menu.addChild(title);
     menu.addChild(tittxt);
@@ -219,35 +219,35 @@ function createUFO() {
     ufo.sprite = ufospr;
     ufo.layer = 4
 
-    ufo.x = Math.floor(Math.random() * 750 );
+    ufo.pos.x = Math.floor(Math.random() * 750 );
 
-    ufo.y = -100 - Math.floor(Math.random() * 50 );
+    ufo.pos.y = -100 - Math.floor(Math.random() * 50 );
 
     ufo.update = function() {
         if(up) {
-            if(ufo.y < 500) {
-                ufo.y+=1;
+            if(ufo.pos.y < 500) {
+                ufo.pos.y+=1;
             }
             else {
                 asd.removeChild(ufo);
                 up = false;
             }
 
-            let ul = ufo.x;
-            let ur = ufo.x+100;
-            let ut = ufo.y;
-            let ub = ufo.y+100;
+            let ul = ufo.pos.x;
+            let ur = ufo.pos.x+100;
+            let ut = ufo.pos.y;
+            let ub = ufo.pos.y+100;
 
-            let rl = rocketspr.wx;
-            let rr = rocketspr.wx + 20;
-            let rt = rocketspr.wy;
-            let rb = rocketspr.wy + 20;
+            let rl = rocketspr.wpos.x;
+            let rr = rocketspr.wpos.x + 20;
+            let rt = rocketspr.wpos.y;
+            let rb = rocketspr.wpos.y + 20;
 
             if(!(ul > rr || ur < rl || ut > rb || ub < rt || !rocketfly)) {
                 let ex = createEXP(rl, rt);
                 asd.addChild(ex)
                 asd.removeChild(ufo);
-                rocketspr.y = -50;
+                rocketspr.pos.y = -50;
                 rocket.rot = pivot.rot;
                 rocketfly = false;
                 pts+=100;
@@ -263,8 +263,8 @@ function createEXP(x, y) {
     exp.sprite = ex1;
     exp.layer = 3
     exp.stime = game.frames
-    exp.x = x - 50;
-    exp.y = y - 50;
+    exp.pos.x = x - 50;
+    exp.pos.y = y - 50;
 
 
 

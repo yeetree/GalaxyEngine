@@ -13,7 +13,7 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 
 ## API Reference
 ###  `galaxy` Class
-* `new galaxy(width, height)` - Creates Galaxy instance with width `width` and height `height`
+* `new galaxy(width, height, id)` - Creates Galaxy instance with width `width` and height `height`. Adds it to element with id `id`.
 
 * `galaxy.gfx` (`galaxygfx`) - Reference to `galaxygfx` class
 
@@ -41,7 +41,7 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 *  `galaxyinput.getKeyDown(key)` (`Function`) - Checks if `key` is down, but only triggers once after keydown. **NOTE: `key` is a string, and these functions check for HTML KeyboardEvent.code codes**
 
 ### `galaxygfx` Class
-* `new galaxygfx(width, height)` - Creates canvas with width `width` and height `height` and `galaxygfx` instance
+* `new galaxygfx(width, height, id)` - Creates canvas with width `width` and height `height` and `galaxygfx` instance. Adds it to element with id `id`
 
 * `galaxygfx.drawspr(sprite, x, y)` (`Function`) - Draws `sprite` (is a `sprite` object) at `x`, `y`
 
@@ -80,16 +80,19 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 
 * `canvassprite.ctx` (`CanvasRenderingContext2D`) - Reference to the sprite's canvas 2D rendering context. Use this to draw to the sprite.
 
+### `v2` Class
+* `new v2(x, y)` - Creates new Vector2 with x `x` and y `y`
+
+* `v2.x` (`Number`) - X Value
+
+* `v2.y` (`Number`) - Y Value
+
 ### `entity` Class
 * `new entity()` - Creates new entity with blank sprite
 
-* `entity.x` (`Number`) - Entity's x position
+* `entity.pos` (`v2`) - Entity's position
 
-* `entity.y` (`Number`) - Entity's y position
-
-* `entity.wx` (`Number`) - Entity's global x position
-
-* `entity.wy` (`Number`) - Entity's global y position
+* `entity.wpos` (`v2`) - Entity's global position (readonly)
 
 * `entity.rot` (`Number`) - Entity's rotation (degrees)
 
@@ -104,13 +107,9 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 ### `canvasentity` Class
 * `new canvasentity()` - Creates new entity with blank sprite
 
-* `canvasentity.x` (`Number`) - Entity's x position
+* `canvasentity.pos` (`v2`) - Entity's position
 
-* `canvasentity.y` (`Number`) - Entity's y position
-
-* `canvasentity.wx` (`Number`) - Entity's global x position
-
-* `canvasentity.wy` (`Number`) - Entity's global y position
+* `canvasentity.wpos` (`v2`) - Entity's global position (readonly)
 
 * `canvasentity.rot` (`Number`) - Entity's rotation (degrees)
 
@@ -125,13 +124,9 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 ### `text` Class
 * `new text()` - Creates new text object entity
 
-* `text.x` (`Number`) - Entity's x position
+* `text.pos` (`v2`) - Entity's position
 
-* `text.y` (`Number`) - Entity's y position
-
-* `text.wx` (`Number`) - Entity's global x position
-
-* `text.wy` (`Number`) - Entity's global y position
+* `text.wpos` (`v2`) - Entity's global position (readonly)
 
 * `text.rot` (`Number`) - Entity's rotation (degrees)
 
@@ -148,13 +143,9 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 ### `container` Class
 * `new container()` - Creates new entity with blank sprite
 
-* `container.x` (`Number`) - Container's x position
+* `container.pos` (`v2`) - Container's position
 
-* `container.y` (`Number`) - Container's y position
-
-* `container.wx` (`Number`) - Container's global x position
-
-* `container.wy` (`Number`) - Container's global y position
+* `container.wpos` (`v2`) - Container's global position (readonly)
 
 * `container.rot` (`Number`) - Container's rotation (degrees)
 

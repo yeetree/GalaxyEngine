@@ -7,16 +7,16 @@ let ent = new entity();
 //Make entity update function
 ent.update = function() {
     if(game.input.getKey("KeyW")) {
-        ent.y-=5;
+        ent.pos.y-=5;
     }
     if(game.input.getKey("KeyS")) {
-        ent.y+=5;
+        ent.pos.y+=5;
     }
     if(game.input.getKey("KeyA")) {
-        ent.x-=5;
+        ent.pos.x-=5;
     }
     if(game.input.getKey("KeyD")) {
-        ent.x+=5;
+        ent.pos.x+=5;
     }
 }
 

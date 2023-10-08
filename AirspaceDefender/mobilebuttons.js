@@ -1,0 +1,21 @@
+//This is not a part of Galaxy Engine, just mobile controls for Airspace Defender
+let l = document.getElementById("left")
+l.addEventListener("touchstart", (e) => { game.input._upKDwn({ code: "ArrowLeft"}) })
+l.addEventListener("mousedown", (e) => { game.input._upKDwn({ code: "ArrowLeft"}) })
+l.addEventListener("touchend", (e) => { game.input._upKUp({ code: "ArrowLeft"}) })
+l.addEventListener("touchcancel", (e) => { game.input._upKUp({ code: "ArrowLeft"}) })
+l.addEventListener("mouseup", (e) => { game.input._upKUp({ code: "ArrowLeft"}) })
+
+let r = document.getElementById("right")
+r.addEventListener("touchstart", (e) => { game.input._upKDwn({ code: "ArrowRight"}) })
+r.addEventListener("mousedown", (e) => { game.input._upKDwn({ code: "ArrowRight"}) })
+r.addEventListener("touchend", (e) => { game.input._upKUp({ code: "ArrowRight"}) })
+r.addEventListener("touchcancel", (e) => { game.input._upKUp({ code: "ArrowRight"}) })
+r.addEventListener("mouseup", (e) => { game.input._upKUp({ code: "ArrowRight"}) })
+
+let f = document.getElementById("fire")
+f.addEventListener("touchstart", (e) => { game.input._upKDwn({ code: "Space"}) })
+f.addEventListener("mousedown", (e) => { game.input._upKDwn({ code: "Space"}) })
+f.addEventListener("touchend", (e) => { game.input._upKUp({ code: "Space"}) })
+f.addEventListener("touchcancel", (e) => { game.input._upKUp({ code: "Space"}) })
+f.addEventListener("mouseup", (e) => { game.input._upKUp({ code: "Space"}) })

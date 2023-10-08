@@ -2,8 +2,9 @@
 glscript = document.createElement("script");
 glscript.src = gameconfig.enginepath + "/import.js";
 document.body.appendChild(glscript);
+
 glscript.onload = function(){
-   	imports();
+	imports();
 };
 
 async function imports()

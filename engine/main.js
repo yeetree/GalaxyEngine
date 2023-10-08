@@ -24,8 +24,8 @@ class galaxy {
     alreadystarted = false;
 
     //Init
-    constructor(w, h) {
-        this.gfx = new galaxygfx(w, h)
+    constructor(w, h, id) {
+        this.gfx = new galaxygfx(w, h, id)
         this.input = new galaxyinput(this.gfx)
         this.scene = new container();
     }
@@ -61,10 +61,8 @@ class container {
     //List of objects (children)
     objects = [];
     //Position and rotation
-    x = 0;
-    y = 0;
-    wx = 0;
-    wy = 0;
+    pos = new v2();
+    wpos = new v2();
     rot = 0;
     
     //Layer
@@ -100,8 +98,8 @@ class container {
         gfx.ctx.transform(...this._mat)
 
         let gt = gfx.ctx.getTransform();
-        this.wx = gt.e;
-        this.wy = gt.f;
+        this.wpos.x = gt.e;
+        this.wpos.y = gt.f;
 
         //Loop through children
         for(let i=0; i<this.objects.length; i++) {
@@ -120,7 +118,7 @@ class container {
         //If not initiated, initiate! Allows for drawing after first update frame.
         if(!this._init) {this._init = true};
         this.update();
-        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
+        this._mat = setMat(this._mat, this.pos.x, this.pos.y, 1, this.rot)
         //Loop through children
         for(let i=0; i<this.objects.length; i++) {
             //Call update function of entity
@@ -149,10 +147,8 @@ class entity {
     //Sprite
     sprite = null;
     //Position and rotation
-    x = 0;
-    y = 0;
-    wx = 0;
-    wy = 0;
+    pos = new v2();
+    wpos = new v2();
     rot = 0;
     //Layer
     layer = 0;
@@ -174,8 +170,8 @@ class entity {
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat);
         let gt = gfx.ctx.getTransform();
-        this.wx = gt.e;
-        this.wy = gt.f;
+        this.wpos.x = gt.e;
+        this.wpos.y = gt.f;
         //Draws the sprite
         gfx.drawspr(this.sprite, 0, 0, 0);
         //Pops context position
@@ -186,7 +182,7 @@ class entity {
         //If not initiated, initiate! Allows for drawing after first update frame.
         if(!this._init) {this._init = true};
         this.update();
-        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
+        this._mat = setMat(this._mat, this.pos.x, this.pos.y, 1, this.rot)
     }
 
     _start = function() {
@@ -214,8 +210,8 @@ class canvasentity extends entity {
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
         let gt = gfx.ctx.getTransform();
-        this.wx = gt.e;
-        this.wy = gt.f;
+        this.wpos.x = gt.e;
+        this.wpos.y = gt.f;
         //Draws the sprite
         gfx.drawsprimg(this.sprite.canvas, 0, 0, 0);
         //Pops context position
@@ -231,10 +227,8 @@ class text {
     color = "white";
     fill = true;
     //Position and rotation
-    x = 0;
-    y = 0;
-    wx = 0;
-    wy = 0;
+    pos = new v2();
+    wpos = new v2();
     rot = 0;
     //Layer
     layer = 0;
@@ -245,7 +239,7 @@ class text {
 
     _update = function() {
         if(!this._init) {this._init = true};
-        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
+        this._mat = setMat(this._mat, this.pos.x, this.pos.y, 1, this.rot)
     }
 
     _start = function() {}
@@ -256,8 +250,8 @@ class text {
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
         let gt = gfx.ctx.getTransform();
-        this.wx = gt.e;
-        this.wy = gt.f;
+        this.wpos.x = gt.e;
+        this.wpos.y = gt.f;
         
         //Draws the text
         gfx.ctx.fillStyle = this.color;
@@ -272,6 +266,15 @@ class text {
         
         //Pops context position
         gfx.ctx.restore();
+    }
+}
+
+class v2 {
+    x = 0;
+    y = 0;
+    constructor(x = 0, y = 0) {
+        this.x = x;
+        this.y = y;
     }
 }
 
