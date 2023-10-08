@@ -10,9 +10,12 @@ class galaxy {
     scene = null;
 
     //Refresh rate (FPS)
-    fps = 30;
-    _frameCount = 0;
-    _eachNthFrame = 0;
+    fps = 60;
+    _lastDraw = 0;
+    _frameDiff = 0;
+
+    //Frame count
+    frames = 0;
 
     //isrunning
     running = false;
@@ -28,21 +31,28 @@ class galaxy {
     }
 
     start = function() {
-        this._eachNthFrame = Math.round((1000 / this.fps) / 16.66);
+        this._frameDiff = Math.round((1000 / this.fps));
         this.running = true;
         if(!this.alreadystarted) {
             this.scene._start();
             this.alreadystarted = true;
         }
-        this._loop();
+        requestAnimationFrame(this._loop.bind(this));
     }
 
     _loop = async function() {
-        this.scene._update();
-        this.gfx.clear();
-        this.scene._draw(this.gfx);
-        await sleep(16);
-        this._loop();
+        let now = Date.now();
+        let diff = now - this._lastDraw;
+
+        if (diff >= this._frameDiff) {
+            this.scene._update();
+            this.gfx.clear();
+            this.scene._draw(this.gfx);
+            this.frames+=1;
+            this._lastDraw = now;
+        }
+
+        requestAnimationFrame(this._loop.bind(this));
     }
 }
 
@@ -53,6 +63,8 @@ class container {
     //Position and rotation
     x = 0;
     y = 0;
+    wx = 0;
+    wy = 0;
     rot = 0;
     
     //Layer
@@ -60,6 +72,9 @@ class container {
 
     //Matrix (calculated on draw)
     _mat = Mat(0, 0, 1, 0);
+
+    //Already initiated?
+    _init = false;
 
     //Add a child to the container
     addChild = function(child) {
@@ -84,10 +99,16 @@ class container {
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
 
+        let gt = gfx.ctx.getTransform();
+        this.wx = gt.e;
+        this.wy = gt.f;
+
         //Loop through children
         for(let i=0; i<this.objects.length; i++) {
             //Call draw function of entity
-            this.objects[i]._draw(gfx);
+            let dr = this.objects[i]
+            //Makes sure that the entity has had at least one update frame before drawing
+            if(dr._init) { dr._draw(gfx); }
         }
 
         //pops context position
@@ -96,6 +117,8 @@ class container {
 
     //Update
     _update = function() {
+        //If not initiated, initiate! Allows for drawing after first update frame.
+        if(!this._init) {this._init = true};
         this.update();
         this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
         //Loop through children
@@ -128,9 +151,14 @@ class entity {
     //Position and rotation
     x = 0;
     y = 0;
+    wx = 0;
+    wy = 0;
     rot = 0;
     //Layer
     layer = 0;
+
+    //Already initiated?
+    _init = false;
 
     //Matrix (calculated on draw)
     _mat = Mat(0, 0, 1, 0);
@@ -142,10 +170,12 @@ class entity {
 
     //Draw function
     _draw = function(gfx) {
-        //Calculates matrix
         //Pushes context position and applies matrix
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat);
+        let gt = gfx.ctx.getTransform();
+        this.wx = gt.e;
+        this.wy = gt.f;
         //Draws the sprite
         gfx.drawspr(this.sprite, 0, 0, 0);
         //Pops context position
@@ -153,6 +183,8 @@ class entity {
     }
 
     _update = function() {
+        //If not initiated, initiate! Allows for drawing after first update frame.
+        if(!this._init) {this._init = true};
         this.update();
         this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
     }
@@ -178,13 +210,66 @@ class canvasentity extends entity {
 
     //Draw function
     _draw = function(gfx) {
-        //Calculates matrix
-        this._upMat();
         //Pushes context position and applies matrix
         gfx.ctx.save();
         gfx.ctx.transform(...this._mat)
+        let gt = gfx.ctx.getTransform();
+        this.wx = gt.e;
+        this.wy = gt.f;
         //Draws the sprite
         gfx.drawsprimg(this.sprite.canvas, 0, 0, 0);
+        //Pops context position
+        gfx.ctx.restore();
+    }
+}
+
+//Text Object
+class text {
+    //Text Stuff
+    txt = "";
+    font = "48px Arial";
+    color = "white";
+    fill = true;
+    //Position and rotation
+    x = 0;
+    y = 0;
+    wx = 0;
+    wy = 0;
+    rot = 0;
+    //Layer
+    layer = 0;
+    //Already Initiated
+    _init = false;
+    //Matrix (calculated on draw)
+    _mat = Mat(0, 0, 1, 0);
+
+    _update = function() {
+        if(!this._init) {this._init = true};
+        this._mat = setMat(this._mat, this.x, this.y, 1, this.rot)
+    }
+
+    _start = function() {}
+
+    //Draw function
+    _draw = function(gfx) {
+        //Pushes context position and applies matrix
+        gfx.ctx.save();
+        gfx.ctx.transform(...this._mat)
+        let gt = gfx.ctx.getTransform();
+        this.wx = gt.e;
+        this.wy = gt.f;
+        
+        //Draws the text
+        gfx.ctx.fillStyle = this.color;
+        gfx.ctx.strokeStyle = this.color;
+        gfx.ctx.font = this.font;
+        if(this.fill) {
+            gfx.ctx.fillText(this.txt, 0, 0);
+        }
+        else {
+            gfx.ctx.strokeText(this.txt, 0, 0);
+        }
+        
         //Pops context position
         gfx.ctx.restore();
     }

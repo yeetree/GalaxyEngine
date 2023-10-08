@@ -74,6 +74,10 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 
 * `entity.y` (`Number`) - Entity's y position
 
+* `entity.wx` (`Number`) - Entity's global x position
+
+* `entity.wy` (`Number`) - Entity's global y position
+
 * `entity.rot` (`Number`) - Entity's rotation (degrees)
 
 * `entity.layer` (`Number`) - Entity's draw layer
@@ -91,6 +95,10 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 
 * `canvasentity.y` (`Number`) - Entity's y position
 
+* `canvasentity.wx` (`Number`) - Entity's global x position
+
+* `canvasentity.wy` (`Number`) - Entity's global y position
+
 * `canvasentity.rot` (`Number`) - Entity's rotation (degrees)
 
 * `canvasentity.layer` (`Number`) - Entity's draw layer
@@ -101,12 +109,39 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 
 * `canvasentity.start()` (`Function`) - Entity's start function. Re-definable by user.
 
+### `text` Class
+* `new text()` - Creates new text object entity
+
+* `text.x` (`Number`) - Entity's x position
+
+* `text.y` (`Number`) - Entity's y position
+
+* `text.wx` (`Number`) - Entity's global x position
+
+* `text.wy` (`Number`) - Entity's global y position
+
+* `text.rot` (`Number`) - Entity's rotation (degrees)
+
+* `text.layer` (`Number`) - Entity's draw layer
+
+* `text.txt` (`String`) - Entity's text to display.
+
+* `text.font` (`String`) - Entity's font. Uses same format as CanvasRenderingContext2D.font.
+
+* `text.color` (`String`) - Entity's color. Uses same format as CanvasRenderingContext2D.fillStyle / CanvasRenderingContext2D.strokeStyle.
+
+* `text.fill` (`Boolean`) - Chooses to use either fillText or stokeText.
+
 ### `container` Class
 * `new container()` - Creates new entity with blank sprite
 
 * `container.x` (`Number`) - Container's x position
 
 * `container.y` (`Number`) - Container's y position
+
+* `container.wx` (`Number`) - Container's global x position
+
+* `container.wy` (`Number`) - Container's global y position
 
 * `container.rot` (`Number`) - Container's rotation (degrees)
 
@@ -115,6 +150,8 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 * `container.objects` (`Array of entity, canvasentity, or container`) - Container's children.
 
 * `canvasentity.addChild(obj)` (`Function`) - Adds child to container and sorts objects by layer. `obj` is either a `entity`, `canvasentity`, or `container`
+
+* `canvasentity.addChild(obj)` (`Function`) - Removes child from container. `obj` is either a `entity`, `canvasentity`, or `container`
 
 * `canvasentity.update()` (`Function`) - Container's update function. Re-definable by user.
 
