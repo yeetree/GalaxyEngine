@@ -47,6 +47,7 @@ class sprite {
     load = async function(src) {
         //New image object
         this.img = new Image();
+        this.img.crossOrigin = `Anonymous`;
         //Sets source to src
         this.img.src = src
         //Waits for image to load
@@ -62,6 +63,70 @@ class sprite {
         this.img.onload = null;
         this.width = this.img.width;
         this.height = this.img.height;
+    }
+}
+
+class spritesheet {
+    //Image
+    img = null;
+    width = 0;
+    height = 0;
+
+    sprites = [];
+
+    //Loads image
+    load = async function(src) {
+        //New image object
+        this.img = new Image();
+        this.img.crossOrigin = `Anonymous`;
+        //Sets source to src
+        this.img.src = src
+        //Waits for image to load
+        await new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve("timeout");
+            }, 10000);
+            this.img.onload = function() {
+                resolve();
+            }
+        });
+        //Sets the width to the image
+        this.img.onload = null;
+        this.width = this.img.width;
+        this.height = this.img.height;
+    }
+
+    //Splits image
+    split = function(cw, ch, cols, rows) {
+        this.sprites = [];
+
+        //Create "Result Canvas"
+        let rescanv = document.createElement("canvas");
+        rescanv.width = cw;
+        rescanv.height = ch;
+        let resctx = rescanv.getContext("2d");
+
+        let canv = document.createElement("canvas");
+        let canvctx = canv.getContext("2d");
+        canv.width = this.width;
+        canv.height = this.height;
+        canvctx.drawImage(this.img, 0, 0, this.width, this.height)
+
+        for(let r=0; r<rows; r++) {
+            for(let c=0; c<cols; c++) {
+                let x = cw * c;
+                let y = ch * r
+                let sdata = canvctx.getImageData(x, y, x+cw, y+ch);
+                resctx.putImageData(sdata, 0, 0)
+                let spr = new sprite();
+                spr.img = new Image();
+                spr.img.crossOrigin = `Anonymous`;
+                spr.img.src = rescanv.toDataURL()
+                spr.width = cw;
+                spr.height = ch;
+                this.sprites.push(spr);
+            }
+        }
     }
 }
 

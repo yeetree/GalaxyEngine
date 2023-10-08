@@ -58,6 +58,19 @@ After setting up your game, you can run `game.start()` to start the game loop. S
 
 * `sprite.load(url)` (`Async Function`) - Loads image from `url`, please use `await` to load.
 
+### `spritesheet` Class
+* `new spritesheet()` - Creates new spritesheet with blank image.
+
+* `spritesheet.img` (`HTMLImageElement`) - Spritesheet source image
+
+* `spritesheet.width` + `spritesheet.height` (`Number`) - Width and height of source image. Can be resized to scale.
+
+* `spritesheet.load(url)` (`Async Function`) - Loads source image from `url`, please use `await` to load.
+
+* `spritesheet.sprites` (`Array of sprite`) - An array containing all the sprites resulting after splitting the image with `spritesheet.split`.
+
+* `spritesheet.split(cw, ch, cols, rows)` (`Function`) - Splits the image and stores sub-images in `spritesheet.sprites`. `cw` is the width of the cells in pixels, `ch`, is the height of them, `cols` is the number of columns to split the image into, and `rows` is the number of rows to split the image into.
+
 ### `canvassprite` Class
 * `new canvassprite(width, height)` - Creates new canvassprite with canvas as image, use `drawsprimg(cs.sprite.canvas, x, y)` to draw.
 

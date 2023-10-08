@@ -182,7 +182,7 @@ async function load() {
     ctxt.y = 300;
     ctxt.x = 170;
 
-    getxt.txt = "Made with Galaxy Engine 0.2 Beta 1"
+    getxt.txt = "Made with Galaxy Engine 0.2 Beta 2"
     getxt.font = "20px arial"
     getxt.color = "black"
     getxt.layer = 10;
