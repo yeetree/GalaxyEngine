@@ -1,5 +1,5 @@
 //Create galaxy instance
-let game = new galaxy(800, 600);
+let game = new galaxy(800, 600, "game");
 
 //Create entity
 let ent = new entity();
